@@ -3,10 +3,8 @@
 import { useAuth } from "@/hooks/use-auth";
 
 export default function Login() {
-  const {user} = useAuth();
-  console.log(user);
+  const {user, logout} = useAuth();
   
-
   return (
     <>
       <h1>登入狀態</h1>
@@ -20,7 +18,7 @@ export default function Login() {
             <div className="account fs-3">{user.account}</div>
             <div className="mail">{user.mail}</div>
             <div className="d-flex">
-              <div className="btn btn-primary ms-auto btn-logout">登出</div>
+              <div className="btn btn-primary ms-auto btn-logout" onClick={logout}>登出</div>
             </div>
           </div>
         </>
