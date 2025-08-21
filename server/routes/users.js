@@ -267,7 +267,6 @@ router.delete("/:account", checkToken, async (req, res) => {
 router.post("/login", upload.none(), async (req, res) => {
   try {
     const { account, password } = req.body;
-    console.log(account);
 
     const sqlCheck1 = "SELECT * FROM `users` WHERE `account` = ?;";
     let user = await connection
@@ -300,10 +299,17 @@ router.post("/login", upload.none(), async (req, res) => {
       secretKey,
       { expiresIn: "30m" }
     );
+
+    const newUser = {
+      account: user.account,
+      mail: user.mail,
+      head: user.head,
+    }
+    
     res.status(200).json({
       status: "success",
       message: "登入成功",
-      data: token,
+      data: {token, user: newUser},
     });
   } catch (error) {
     // 補獲錯誤
@@ -382,17 +388,23 @@ router.post("/status", checkToken, async (req, res) => {
     const token = jwt.sign(
       {
         account: user.account,
-        name: user.name,
         mail: user.mail,
         head: user.head,
       },
       secretKey,
       { expiresIn: "30m" }
     );
+
+    const newUser = {
+      account: user.account,
+      mail: user.mail,
+      head: user.head,
+    };
+
     res.status(200).json({
       status: "success",
       message: "處於登入狀態",
-      data: token,
+      data: {token, user: newUser},
     });
   } catch (error) {
     // 補獲錯誤
