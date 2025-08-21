@@ -8,6 +8,7 @@ const appKey = "reactLoginToken";
 
 export function AuthProvider({children}){
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const login = async (account, password)=>{
     console.log(`在 use-auth 中, ${account}, ${password}`);
@@ -70,6 +71,7 @@ export function AuthProvider({children}){
     const token = localStorage.getItem(appKey);
     if(!token){
       setUser(null);
+      setIsLoading(false);
       return;
     }
     const checkToken = async ()=>{
@@ -85,8 +87,10 @@ export function AuthProvider({children}){
           const token = result.data.token;
           setUser(result.data.user);
           localStorage.setItem(appKey, token);
+          setIsLoading(false);
         }else{
           // alert(result.message);
+          setIsLoading(false);
         }
       }catch(error){
         console.log(`解析 token 失敗: ${error.message}`);
@@ -98,7 +102,7 @@ export function AuthProvider({children}){
   }, []);
 
   return(
-    <AuthContext.Provider value={{user, login, logout}}>
+    <AuthContext.Provider value={{user, login, logout, isLoading}}>
       {children}
     </AuthContext.Provider>
   )
