@@ -421,7 +421,6 @@ router.post("/status", checkToken, async (req, res) => {
 
 function checkToken(req, res, next) {
   let token = req.get("Authorization");
-  console.log(token);
   if (token && token.includes("Bearer ")) {
     token = token.slice(7);
     jwt.verify(token, secretKey, (error, decoded) => {
