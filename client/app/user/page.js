@@ -41,10 +41,12 @@ export default function UserPage() {
           {users.map((user, index)=>(
             <tr key={`user${index}`}>
               <th scope="row">{index+1}</th>
-              <td>{user.accout}</td>
+              <td>{user.account}</td>
               <td>{user.mail}</td>
               <td>
-                <Image src={user.head} width={100} height={150} style={{objectFit: "contain"}} alt="" />
+                <Link href={`/user/${user.account}`}>
+                  <Image src={user.head} width={50} height={50} style={{objectFit: "contain"}} alt="" />
+                </Link>
               </td>
             </tr>
           ))}
