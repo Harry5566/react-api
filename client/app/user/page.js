@@ -10,7 +10,7 @@ export default function UserPage() {
 
   useEffect(()=>{
     list();
-  }, [list]);
+  }, []);
 
   if(!users.length){
     return (
